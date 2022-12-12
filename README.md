@@ -13,10 +13,10 @@ Projeto realizado para aprender e aprimorar os conceitos do Sequelize e ORMs com
 $ git clone https://github.com/victorluadev/node-orm-sequelize.git && cd node-orm-sequelize
 
 # Instale as dependências do projeto
-$ yarn
+$ npm install
 
 # Executando a aplicação
-$ yarn dev
+$ npm run dev
 ```
 
 ## Como Contribuir 📝
