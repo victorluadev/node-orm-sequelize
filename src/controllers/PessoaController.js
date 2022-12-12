@@ -23,8 +23,19 @@ class PessoaController {
       });
 
       return res.status(200).json(pessoa);
-
     } catch(err) {
+      return res.status(500).json({message: err.message});
+    }
+  }
+
+  static async create(req, res) {
+    const pessoa = req.body;
+
+    try {
+      const createdPessoa = await database.Pessoas.create(pessoa);
+      
+      return res.status(201).json(createdPessoa);
+    } catch (err) {
       return res.status(500).json({message: err.message});
     }
   }
