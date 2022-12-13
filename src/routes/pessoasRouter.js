@@ -9,5 +9,6 @@ router
   .post('/pessoas', PessoaController.create)
   .put('/pessoas/:id', PessoaController.update)
   .delete('/pessoas/:id', PessoaController.delete)
+  .get('/pessoas/:estudanteID/matricula/:matriculaID', PessoaController.getMatriculaById)
 
 module.exports = router;
