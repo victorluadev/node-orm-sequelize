@@ -108,6 +108,46 @@ class PessoaController {
       return res.status(500).json({message: err.message});
     }
   }
+
+  static async updateMatricula(req, res) {
+    const { estudanteID, matriculaID } = req.params;
+    const updateMatricula = req.body;
+
+    try{
+      await database.Matriculas.update(updateMatricula, {
+        where: {
+          id: Number(matriculaID),
+          estudante_id: Number(estudanteID)
+        }
+      });
+
+      const updatedMatricula = await database.Matriculas.findOne({
+        where: {
+          id: Number(matriculaID)
+        }
+      });
+
+      return res.status(200).json(updatedMatricula);
+    } catch(err) {
+      return res.status(500).json({message: err.message});
+    }
+  }
+
+  static async deleteMatricula(req, res) {
+    const { estudanteID, matriculaID } = req.params;
+
+    try {
+      await database.Matriculas.destroy({
+        where: {
+          id: Number(matriculaID)
+        }
+      });
+
+      return res.status(200).send({message: `ID ${matriculaID} successfully deleted`});
+    } catch (err) {
+      return res.status(500).json({message: err.message});
+    }
+  }
 }
 
 module.exports = PessoaController;
