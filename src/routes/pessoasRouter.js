@@ -4,7 +4,8 @@ const PessoaController = require('../controllers/PessoaController.js');
 const router = Router();
 
 router
-  .get('/pessoas', PessoaController.getPessoas)
+  .get('/pessoas', PessoaController.getPessoasAtivas)
+  .get('/pessoas/all', PessoaController.getPessoas)
   .get('/pessoas/:id', PessoaController.getPessoaById)
   .post('/pessoas', PessoaController.create)
   .put('/pessoas/:id', PessoaController.update)
