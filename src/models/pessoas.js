@@ -14,14 +14,32 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'docente_id'
       });
       Pessoas.hasMany(models.Matriculas, {
-        foreignKey: 'estudante_id'
+        foreignKey: 'estudante_id',
+        scope: { status: 'confirmado' },
+        as: 'aulasMatriculadas'
       });
     }
   }
   Pessoas.init({
-    nome: DataTypes.STRING,
+    nome: {
+      type: DataTypes.STRING,
+      validate: {
+        funcValidate: function(nome) {
+          if(nome.length < 3) 
+            throw new Error('Field name must have more then three characters');  
+        }
+      }
+    },
     ativo: DataTypes.BOOLEAN,
-    email: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: {
+          args: true,
+          msg: 'Invalid email'
+        }
+      }
+    },
     role: DataTypes.STRING
   }, {
     sequelize,

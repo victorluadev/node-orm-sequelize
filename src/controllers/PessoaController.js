@@ -190,6 +190,24 @@ class PessoaController {
       return res.status(500).json({message: err.message});
     }
   }
+
+  static async getMatriculas(req, res) {
+    const { estudanteID } = req.params;
+
+    try {
+      const pessoa = await database.Pessoas.findOne({
+        where: {
+          id: Number(estudanteID)
+        }
+      });
+
+      const matriculas = await pessoa.getAulasMatriculadas();
+
+      return res.status(200).json(matriculas);
+    } catch (err) {
+      return res.status(500).json({message: err.message});
+    }
+  }
 }
 
 module.exports = PessoaController;
