@@ -12,6 +12,7 @@ router
   .get('/pessoas/matricula/:turmaID/confirmadas', PessoaController.getMatriculasByTurma)
   .get('/pessoas/matricula/lotadas', PessoaController.getFullTurmas)
   .post('/pessoas', PessoaController.create)
+  .post('/pessoas/:estudanteID/cancela', PessoaController.cancelPessoa)
   .put('/pessoas/:id', PessoaController.update)
   .delete('/pessoas/:id', PessoaController.delete)
   .post('/pessoas/:estudanteID/matricula/', PessoaController.createMatricula)
