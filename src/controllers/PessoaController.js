@@ -1,8 +1,8 @@
 // const database = require('../models/index.js');
 // const Sequelize = require('sequelize');
 
-const Services = require('../services/Services.js');
-const pessoasServices = new Services('Pessoas');
+const { PessoasServices } = require('../services/index.js');
+const pessoasServices = new PessoasServices();
 
 class PessoaController {
   static async getPessoasAtivas(req, res) {

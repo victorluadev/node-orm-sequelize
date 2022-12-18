@@ -8,6 +8,22 @@ class Services {
   async getAllRegisters() {
     return database[this.modelName].findAll();
   }
+
+  async getRegister(id) {
+
+  }
+
+  async createRegister(data) {
+
+  }
+
+  async updateRegister(data, id) {
+
+  }
+
+  async deleteRegister(id) {
+
+  }
 }
 
 module.exports = Services;
