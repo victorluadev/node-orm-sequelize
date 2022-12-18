@@ -5,11 +5,7 @@ class Services {
     this.modelName = modelName;
   }
 
-  async getAllRegisters() {
-    return database[this.modelName].findAll();
-  }
-
-  async getAllAndFilter(where = {}) {
+  async getAllRegisters(where = {}) {
     return database[this.modelName].findAll({ where: { ...where } });
   }
 

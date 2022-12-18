@@ -19,7 +19,7 @@ class TurmaController {
     console.log(data_inicial)
     console.log(data_final)
     try {
-      const turmas = await turmasServices.getAllAndFilter(where);
+      const turmas = await turmasServices.getAllRegisters(where);
 
       return res.status(200).json(turmas);
     } catch (error) {
