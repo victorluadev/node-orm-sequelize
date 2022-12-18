@@ -2,6 +2,7 @@ const bodyParser = require("body-parser");
 const pessoasRouter = require('./pessoasRouter.js');
 const niveisRouter = require('./niveisRouter.js');
 const turmasRouter = require('./turmasRouter.js');
+const matriculasRouter = require('./matriculasRouter.js');
 
 const routes = (app) => {
   
@@ -15,7 +16,8 @@ const routes = (app) => {
     bodyParser.json(),
     pessoasRouter,
     niveisRouter,
-    turmasRouter
+    turmasRouter,
+    matriculasRouter
   );
 }
 

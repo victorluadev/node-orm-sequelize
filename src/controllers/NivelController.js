@@ -7,8 +7,9 @@ class NivelController {
 
   static async getNiveis(req, res) {
     try {
-      const niveis = niveisServices.getAllRegisters()
-      return res.status(200).json(niveis)
+      const niveis = niveisServices.getAllRegisters();
+
+      return res.status(200).json(niveis);
     } catch (error) {
       return res.status(500).json(error.message);
     }
@@ -18,11 +19,7 @@ class NivelController {
     const { id } = req.params;
 
     try{
-      const nivel = await database.Niveis.findOne({
-        where: {
-          id: Number(id)
-        }
-      });
+      const nivel = niveisServices.getRegister(Number(id));
 
       return res.status(200).json(nivel);
     } catch(err) {
@@ -34,7 +31,7 @@ class NivelController {
     const nivel = req.body;
 
     try {
-      const createdNivel = await database.Niveis.create(nivel);
+      const createdNivel = await niveisServices.createRegister(nivel);
       
       return res.status(201).json(createdNivel);
     } catch (err) {
@@ -47,17 +44,9 @@ class NivelController {
     const updateNivel = req.body;
 
     try{
-      await database.Niveis.update(updateNivel, {
-        where: {
-          id: Number(id)
-        }
-      });
+      await niveisServices.updateRegister(updateNivel,Number(id));
 
-      const updatedNivel = await database.Niveis.findOne({
-        where: {
-          id: Number(id)
-        }
-      });
+      const updatedNivel = await niveisServices.getRegister(Number(id));
 
       return res.status(200).json(updatedNivel);
     } catch(err) {
@@ -69,11 +58,7 @@ class NivelController {
     const { id } = req.params;
 
     try {
-      await database.Niveis.destroy({
-        where: {
-          id: Number(id)
-        }
-      });
+      await niveisServices.deleteRegister(Number(id));
 
       return res.status(200).send({message: `ID ${id} successfully deleted`});
     } catch (err) {
@@ -84,7 +69,8 @@ class NivelController {
   static async restoreNivel(req, res) {
     const { id } = req.params
     try {
-      await database.Niveis.restore( {where: { id: Number(id) } } )
+      await niveisServices.restoreRegister(Number(id));
+
       return res.status(200).json({ mensagem: `ID ${id} successfully restored`})
     } catch (error) {
       return res.status(500).json(error.message)

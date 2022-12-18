@@ -1,6 +1,8 @@
-const database = require('../models/index.js');
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
+// const database = require('../models/index.js');
+const { Op } = require('sequelize');
+
+const { TurmasServices } = require('../services/index.js');
+const turmasServices = new TurmasServices();
 
 class TurmaController {
 
@@ -17,7 +19,8 @@ class TurmaController {
     console.log(data_inicial)
     console.log(data_final)
     try {
-      const turmas = await database.Turmas.findAll({ where });
+      const turmas = await turmasServices.getAllAndFilter(where);
+
       return res.status(200).json(turmas);
     } catch (error) {
       return res.status(500).json(error.message);
@@ -28,11 +31,7 @@ class TurmaController {
     const { id } = req.params;
 
     try{
-      const turma = await database.Turmas.findOne({
-        where: {
-          id: Number(id)
-        }
-      });
+      const turma = await turmasServices.getRegister(Number(id));
 
       return res.status(200).json(turma);
     } catch(err) {
@@ -44,7 +43,7 @@ class TurmaController {
     const turma = req.body;
 
     try {
-      const createdTurma = await database.Turmas.create(turma);
+      const createdTurma = await turmasServices.createRegister(turma);
       
       return res.status(201).json(createdTurma);
     } catch (err) {
@@ -57,17 +56,9 @@ class TurmaController {
     const updateTurma = req.body;
 
     try{
-      await database.Turmas.update(updateTurma, {
-        where: {
-          id: Number(id)
-        }
-      });
+      await turmasServices.updateRegister(updateTurma, Number(id));
 
-      const updatedTurma = await database.Turmas.findOne({
-        where: {
-          id: Number(id)
-        }
-      });
+      const updatedTurma = await turmasServices.getRegister(Number(id));
 
       return res.status(200).json(updatedTurma);
     } catch(err) {
@@ -79,11 +70,7 @@ class TurmaController {
     const { id } = req.params;
 
     try {
-      await database.Turmas.destroy({
-        where: {
-          id: Number(id)
-        }
-      });
+      await turmasServices.deleteRegister(Number(id));
 
       return res.status(200).send({message: `ID ${id} successfully deleted`});
     } catch (err) {
@@ -94,11 +81,7 @@ class TurmaController {
   static async restoreTurma(req, res) {
     const { id } = req.params
     try {
-      await database.Turmas.restore( {
-        where: { 
-          id: Number(id) 
-        } 
-      });
+      await turmasServices.restoreRegister(Number(id));
 
       return res.status(200).json({ mensagem: `ID ${id} successfully restored`});
     } catch (error) {

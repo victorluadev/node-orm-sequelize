@@ -3,7 +3,8 @@ const database = require('../models/index.js')
 
 class PessoasServices extends Services {
   constructor() {
-    super('Pessoas')
+    super('Pessoas'),
+    this.matriculas = new Services('Matriculas')
   }
 
   async getActiveRegisters(where = {}) {
@@ -12,6 +13,14 @@ class PessoasServices extends Services {
 
   async getAllRegisters(where = {}) {
     return database[this.modelName].scope('all').findAll({ where: { ...where } });
+  }
+
+  async cancelPessoaAndMatriculas(estudanteId) {
+    return database.sequelize.transaction(async t => {
+      await super.updateRegister({ ativo: true }, estudanteId, { transaction: t });
+      
+      await this.matriculas.updateRegisters({ status: 'cancelado' }, {estudante_id: estudanteId }, { transaction: t });
+    })
   }
 }
 
