@@ -1,7 +1,7 @@
 // const database = require('../models/index.js');
 
 const { NiveisServices } = require('../services/index.js');
-const niveisServices = new NiveisServices('Niveis');
+const niveisServices = new NiveisServices();
 
 class NivelController {
 
